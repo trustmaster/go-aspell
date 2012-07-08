@@ -3,6 +3,8 @@ package aspell
 import (
 	"strings"
 	"testing"
+
+//	"fmt"
 )
 
 // This is a test for basic Aspell initialization
@@ -17,7 +19,7 @@ func TestBasic(t *testing.T) {
 		t.Errorf("Aspell error: %s", err.Error())
 		return
 	}
-	//defer speller.Delete()
+	defer speller.Delete()
 
 	// Test config getter
 	enc := speller.Config("encoding")
@@ -42,10 +44,10 @@ func TestBasic(t *testing.T) {
 }
 
 // This is a test for the list of suggestions
-func TestSuggest(t *testing.T) {
+func TestSuggestReplace(t *testing.T) {
 	// Initialization
 	opts := map[string]string{
-		"lang": "en_US",
+		"lang":     "en_US",
 		"sug-mode": "slow",
 	}
 	speller, err := NewSpeller(opts)
@@ -53,7 +55,7 @@ func TestSuggest(t *testing.T) {
 		t.Errorf("Aspell error: %s", err.Error())
 		return
 	}
-	//defer speller.Delete()
+	defer speller.Delete()
 
 	// A "must have" dictionary
 	dict := map[string]string{
@@ -80,4 +82,39 @@ func TestSuggest(t *testing.T) {
 			t.Errorf("Missing suggestion for '%s': expected '%s', suggested '%s'", incorrect, correct, strings.Join(suggs, ", "))
 		}
 	}
+
+	// Store and test a new replacement
+	if speller.Replace("juse", "juice") {
+		sugJuse := speller.Suggest("juse")
+		found := false
+		for _, word := range sugJuse {
+			if word == "juice" {
+				found = true
+				break
+			}
+		}
+		if !found {
+			t.Errorf("Missing replacement for 'juse': expected 'juse', suggested '%s'", strings.Join(sugJuse, ", "))
+		}
+
+	} else {
+		t.Error("Storing a replacement failed")
+	}
+
+	// // Print dict list
+	// dicts := Dicts()
+	// fmt.Printf("Dicts count: %d\n", len(dicts))
+	// for _, dict := range dicts {
+	// 	fmt.Printf("Name: %s\nCode: %s\nJargon: %s\nSize: %s\nModule: %s\n\n", dict.name, dict.code, dict.jargon, dict.size, dict.module)
+	// }
+
+	// // Print main word list
+	// words, err := speller.MainWordList()
+	// if err != nil {
+	// 	t.Error(err.Error())
+	// } else {
+	// 	for _, word := range words {
+	// 		fmt.Printf("%s, ", word)
+	// 	}
+	// }
 }
