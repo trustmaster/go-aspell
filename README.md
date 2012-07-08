@@ -8,7 +8,7 @@ It uses UTF-8 by default and encapsulates some Aspell internals.
 First make sure aspell library and headers are installed on your system. On Debian/Ubuntu you could install it this way:
 
 ```
-sudo apt-get install aspell, libaspell-dev
+sudo apt-get install aspell libaspell-dev
 ```
 
 It you need some more dictionaries you can install them like this:
