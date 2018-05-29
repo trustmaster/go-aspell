@@ -65,8 +65,10 @@ func TestSuggestReplace(t *testing.T) {
 		"unessessay":   "unnecessary",
 		"lauf":         "laugh",
 		"voteing":      "voting",
+		"xiaom":        "Xiaomi",
 		// "juse":         "juice", // aspell fails at this
 	}
+	speller.AddToPersonal("Xiaomi")
 
 	// Search for correct values among suggestions
 	for incorrect, correct := range dict {
