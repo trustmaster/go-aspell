@@ -205,3 +205,11 @@ func Dicts() []Dict {
 
 	return result
 }
+
+// AddToPersonal adds word to dynamic personal dictionary
+func (s Speller) AddToPersonal(word string) int {
+	cword := C.CString(word)
+	defer C.free(unsafe.Pointer(cword))
+	res := C.aspell_speller_add_to_personal(s.speller, cword, -1)
+	return int(res)
+}
