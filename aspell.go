@@ -3,6 +3,8 @@ package aspell
 
 /*
 #cgo LDFLAGS: -laspell
+#cgo openbsd LDFLAGS: -L/usr/local/lib -laspell
+#cgo openbsd CFLAGS: -I/usr/local/include
 #include <stdlib.h>
 #include "aspell.h"
 */
