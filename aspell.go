@@ -171,11 +171,11 @@ func (s Speller) MainWordList() ([]string, error) {
 
 // Dict represents Aspell dictionary info.
 type Dict struct {
-	name   string
-	code   string
-	jargon string
-	size   string
-	module string
+	Name   string
+	Code   string
+	Jargon string
+	Size   string
+	Module string
 }
 
 // Dicts returns the list of available aspell dictionaries.
@@ -192,11 +192,11 @@ func Dicts() []Dict {
 			break
 		}
 		result = append(result, Dict{
-			name:   C.GoString(entry.name),
-			code:   C.GoString(entry.code),
-			jargon: C.GoString(entry.jargon),
-			size:   C.GoString(entry.size_str),
-			module: C.GoString(entry.module.name),
+			Name:   C.GoString(entry.name),
+			Code:   C.GoString(entry.code),
+			Jargon: C.GoString(entry.jargon),
+			Size:   C.GoString(entry.size_str),
+			Module: C.GoString(entry.module.name),
 		})
 	}
 	C.delete_aspell_dict_info_enumeration(dels)
